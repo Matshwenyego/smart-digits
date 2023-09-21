@@ -1,20 +1,29 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import AppEntry from './src/navigation';
+import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
+import {
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
+import {
+  MD2DarkTheme,
+  MD2LightTheme,
+} from 'react-native-paper';
+import merge from 'deepmerge';
 
-export default function App() {
+const CombinedDarkTheme = merge(MD2DarkTheme, NavigationDarkTheme);
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider theme={CombinedDarkTheme}>
+      <NavigationContainer theme={CombinedDarkTheme}>
+        <AppEntry />
+        <StatusBar style="light" />
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
